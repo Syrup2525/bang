@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AJAX POST 요청 예제</title>
+    <style>
+    .container {
+        text-align: center;
+        margin: 20px;
+    }
+
+    textarea {
+        width: 100%;
+        height: 100px;
+        padding: 10px;
+    }
+
+    button {
+        padding: 10px 20px;
+    }
+
+    #response {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>텍스트 입력</h1>
+        <textarea id="content" placeholder="텍스트 입력"></textarea><br>
+        <input type="text" id="date" placeholder="텍스트 입력" /><br>
+        <button id="submitBtn">제출</button><br>
+        <div id="response"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Submit 버튼 클릭 이벤트
+            $("#submitBtn").click(function () {
+                // JSON 객체 생성
+                const data = {
+                    content: $("#content").val(),
+                    date: $("#date").val(),
+                };
+
+                // AJAX POST 요청 보내기
+                $.ajax({
+                    url: "./result", 
+                    type: "POST",
+                    data: JSON.stringify(data), 
+                    contentType: "application/json; charset=utf-8",
+                    success: function (response) {
+                        // 요청이 성공하면 응답을 표시
+                        $("#response").text("서버 응답: " + response);
+                    },
+                    error: function (error) {
+                        // 요청이 실패하면 오류 메시지를 표시
+                        $("#response").text("오류: " + error.responseText);
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>
